@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.6 Funções Apply | Uma Breve Introdução ao R</title>
+  <meta name="description" content="1.6 Funções Apply | Uma Breve Introdução ao R" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.6 Funções Apply | Uma Breve Introdução ao R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="estatsej/apostila_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.6 Funções Apply | Uma Breve Introdução ao R" />
+  
+  
+  
+
+<meta name="author" content="Eduardo Lemos, Ricardo Masuda, Samuel Vianna, Vitor Landi" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="funcoes.html"/>
+<link rel="next" href="pacotes.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="princípios-básicos.html">Introdução ao R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="princípios-básicos.html"><a href="princípios-básicos.html"><i class="fa fa-check"></i><b>1</b> Princípios Básicos</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="primeiros-passos.html"><a href="primeiros-passos.html"><i class="fa fa-check"></i><b>1.1</b> Primeiros Passos</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="primeiros-passos.html"><a href="primeiros-passos.html#comandos-básicos"><i class="fa fa-check"></i><b>1.1.1</b> Comandos Básicos</a></li>
+<li class="chapter" data-level="1.1.2" data-path="primeiros-passos.html"><a href="primeiros-passos.html#atribuição-de-valores"><i class="fa fa-check"></i><b>1.1.2</b> Atribuição de Valores</a></li>
+<li class="chapter" data-level="1.1.3" data-path="primeiros-passos.html"><a href="primeiros-passos.html#tipos-de-variáveis"><i class="fa fa-check"></i><b>1.1.3</b> Tipos de Variáveis</a></li>
+<li class="chapter" data-level="1.1.4" data-path="primeiros-passos.html"><a href="primeiros-passos.html#utilizando-ajuda-help"><i class="fa fa-check"></i><b>1.1.4</b> Utilizando Ajuda (help)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="operacoes-basicas.html"><a href="operacoes-basicas.html"><i class="fa fa-check"></i><b>1.2</b> Operações Básicas</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="operacoes-basicas.html"><a href="operacoes-basicas.html#operações-simples"><i class="fa fa-check"></i><b>1.2.1</b> Operações simples</a></li>
+<li class="chapter" data-level="1.2.2" data-path="operacoes-basicas.html"><a href="operacoes-basicas.html#operações-lógicas"><i class="fa fa-check"></i><b>1.2.2</b> Operações lógicas</a></li>
+<li class="chapter" data-level="1.2.3" data-path="operacoes-basicas.html"><a href="operacoes-basicas.html#operações-matemáticas"><i class="fa fa-check"></i><b>1.2.3</b> Operações matemáticas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="estrututas-basicas.html"><a href="estrututas-basicas.html"><i class="fa fa-check"></i><b>1.3</b> Estruturas Básicas</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="estrututas-basicas.html"><a href="estrututas-basicas.html#vetor"><i class="fa fa-check"></i><b>1.3.1</b> Vetor</a></li>
+<li class="chapter" data-level="1.3.2" data-path="estrututas-basicas.html"><a href="estrututas-basicas.html#matriz"><i class="fa fa-check"></i><b>1.3.2</b> Matriz</a></li>
+<li class="chapter" data-level="1.3.3" data-path="estrututas-basicas.html"><a href="estrututas-basicas.html#array"><i class="fa fa-check"></i><b>1.3.3</b> Array</a></li>
+<li class="chapter" data-level="1.3.4" data-path="estrututas-basicas.html"><a href="estrututas-basicas.html#lista"><i class="fa fa-check"></i><b>1.3.4</b> Lista</a></li>
+<li class="chapter" data-level="1.3.5" data-path="estrututas-basicas.html"><a href="estrututas-basicas.html#data-frame"><i class="fa fa-check"></i><b>1.3.5</b> Data Frame</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tabelas.html"><a href="tabelas.html"><i class="fa fa-check"></i><b>1.4</b> Tabelas</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="tabelas.html"><a href="tabelas.html#tabelas-simples"><i class="fa fa-check"></i><b>1.4.1</b> Tabelas Simples</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tabelas.html"><a href="tabelas.html#tabelas-de-contingência"><i class="fa fa-check"></i><b>1.4.2</b> Tabelas de Contingência</a></li>
+<li class="chapter" data-level="1.4.3" data-path="tabelas.html"><a href="tabelas.html#tabelas-de-proporção"><i class="fa fa-check"></i><b>1.4.3</b> Tabelas de Proporção</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="funcoes.html"><a href="funcoes.html"><i class="fa fa-check"></i><b>1.5</b> Funções</a></li>
+<li class="chapter" data-level="1.6" data-path="funcoes-apply.html"><a href="funcoes-apply.html"><i class="fa fa-check"></i><b>1.6</b> Funções Apply</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="funcoes-apply.html"><a href="funcoes-apply.html#apply"><i class="fa fa-check"></i><b>1.6.1</b> Apply</a></li>
+<li class="chapter" data-level="1.6.2" data-path="funcoes-apply.html"><a href="funcoes-apply.html#tapply"><i class="fa fa-check"></i><b>1.6.2</b> Tapply</a></li>
+<li class="chapter" data-level="1.6.3" data-path="funcoes-apply.html"><a href="funcoes-apply.html#sapply"><i class="fa fa-check"></i><b>1.6.3</b> Sapply</a></li>
+<li class="chapter" data-level="1.6.4" data-path="funcoes-apply.html"><a href="funcoes-apply.html#lapply"><i class="fa fa-check"></i><b>1.6.4</b> Lapply</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="pacotes.html"><a href="pacotes.html"><i class="fa fa-check"></i><b>1.7</b> Pacotes</a></li>
+<li class="chapter" data-level="1.8" data-path="entrada-dados.html"><a href="entrada-dados.html"><i class="fa fa-check"></i><b>1.8</b> Entrada de Dados</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="entrada-dados.html"><a href="entrada-dados.html#csv-ou-.txt"><i class="fa fa-check"></i><b>1.8.1</b> .csv ou .txt</a></li>
+<li class="chapter" data-level="1.8.2" data-path="entrada-dados.html"><a href="entrada-dados.html#leitura-de-dados-da-internet"><i class="fa fa-check"></i><b>1.8.2</b> Leitura de dados da internet</a></li>
+<li class="chapter" data-level="1.8.3" data-path="entrada-dados.html"><a href="entrada-dados.html#base-de-dados-do-r"><i class="fa fa-check"></i><b>1.8.3</b> Base de dados do R</a></li>
+<li class="chapter" data-level="1.8.4" data-path="entrada-dados.html"><a href="entrada-dados.html#conferência-dos-dados"><i class="fa fa-check"></i><b>1.8.4</b> Conferência dos dados</a></li>
+<li class="chapter" data-level="1.8.5" data-path="entrada-dados.html"><a href="entrada-dados.html#funções-adicionais"><i class="fa fa-check"></i><b>1.8.5</b> Funções Adicionais</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="estatística-básica.html"><a href="estatística-básica.html"><i class="fa fa-check"></i><b>2</b> Estatística Básica</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="medida-de-posição.html"><a href="medida-de-posição.html"><i class="fa fa-check"></i><b>2.1</b> Medida de posição</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="medida-de-posição.html"><a href="medida-de-posição.html#média"><i class="fa fa-check"></i><b>2.1.1</b> Média</a></li>
+<li class="chapter" data-level="2.1.2" data-path="medida-de-posição.html"><a href="medida-de-posição.html#mediana"><i class="fa fa-check"></i><b>2.1.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.1.3" data-path="medida-de-posição.html"><a href="medida-de-posição.html#mínimo-e-máximo"><i class="fa fa-check"></i><b>2.1.3</b> Mínimo e máximo</a></li>
+<li class="chapter" data-level="2.1.4" data-path="medida-de-posição.html"><a href="medida-de-posição.html#quantis"><i class="fa fa-check"></i><b>2.1.4</b> Quantis</a></li>
+<li class="chapter" data-level="2.1.5" data-path="medida-de-posição.html"><a href="medida-de-posição.html#moda"><i class="fa fa-check"></i><b>2.1.5</b> Moda</a></li>
+<li class="chapter" data-level="2.1.6" data-path="medida-de-posição.html"><a href="medida-de-posição.html#função-summary"><i class="fa fa-check"></i><b>2.1.6</b> Função Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="medidas-dispersao.html"><a href="medidas-dispersao.html"><i class="fa fa-check"></i><b>2.2</b> Medidas de Dispersão</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="medidas-dispersao.html"><a href="medidas-dispersao.html#variância"><i class="fa fa-check"></i><b>2.2.1</b> Variância</a></li>
+<li class="chapter" data-level="2.2.2" data-path="medidas-dispersao.html"><a href="medidas-dispersao.html#desvio-padrão"><i class="fa fa-check"></i><b>2.2.2</b> Desvio Padrão</a></li>
+<li class="chapter" data-level="2.2.3" data-path="medidas-dispersao.html"><a href="medidas-dispersao.html#coeficiente-de-variação"><i class="fa fa-check"></i><b>2.2.3</b> Coeficiente de Variação</a></li>
+<li class="chapter" data-level="2.2.4" data-path="medidas-dispersao.html"><a href="medidas-dispersao.html#amplitude"><i class="fa fa-check"></i><b>2.2.4</b> Amplitude</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="correlação.html"><a href="correlação.html"><i class="fa fa-check"></i><b>2.3</b> Correlação</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="correlação.html"><a href="correlação.html#coeficiente-de-pearson"><i class="fa fa-check"></i><b>2.3.1</b> Coeficiente de Pearson</a></li>
+<li class="chapter" data-level="2.3.2" data-path="correlação.html"><a href="correlação.html#coeficiente-de-kendall"><i class="fa fa-check"></i><b>2.3.2</b> Coeficiente de Kendall</a></li>
+<li class="chapter" data-level="2.3.3" data-path="correlação.html"><a href="correlação.html#coeficiente-de-spearman"><i class="fa fa-check"></i><b>2.3.3</b> Coeficiente de Spearman</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Criado com bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Uma Breve Introdução ao R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="funcoes-apply" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Funções Apply</h2>
+<p>Funções da família apply são utilizadas para se aplicar outras funções em diferentes tipos de estruturas de dados,
+a aplicação das funções nessas estruturas é feita de forma iterativa, sem a necessidade de usar loops (como <code>while</code> ou <code>for</code>).
+Diferentes funções apply são usadas para diferentes estruturas de dados.</p>
+<div id="apply" class="section level3" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> Apply</h3>
+<p>A função <code>apply</code> é utilizada em matrizes, –data frames– ou arrays. Ela retorna um vetor ou array dos valores obtidos aplicando a função argumento nos dados, sendo utilizada da seguinte forma:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="funcoes-apply.html#cb113-1" aria-hidden="true"></a><span class="kw">apply</span>(X, Margem, Funcao)</span></code></pre></div>
+<p>Onde <code>X</code> representa os dados (array, matriz ou data.frame), <code>Margem</code> representa a margem que será utilizada na iteração (sendo <code>1</code> para linha, <code>2</code> para coluna), e <code>Funcao</code> representa a função a ser aplicada.</p>
+<p>Exemplos:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="funcoes-apply.html#cb114-1" aria-hidden="true"></a>matriz &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>, <span class="dv">4</span>, <span class="dv">4</span>) <span class="co"># Criando uma matriz 4x4</span></span>
+<span id="cb114-2"><a href="funcoes-apply.html#cb114-2" aria-hidden="true"></a>matriz <span class="co"># Visualizando a matriz</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    5    9   13
+## [2,]    2    6   10   14
+## [3,]    3    7   11   15
+## [4,]    4    8   12   16</code></pre>
+<p>Abaixo aplicamos a função <code>sum</code> (terceiro argumento) ao objeto <code>matriz</code> (primeiro argumento), na primeira marginal (segundo argumento), desta forma, a função <code>apply</code> retorna um vetor com as somas de cada linha da matriz.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="funcoes-apply.html#cb116-1" aria-hidden="true"></a><span class="kw">apply</span>(matriz, <span class="dv">1</span>, sum)</span></code></pre></div>
+<pre><code>## [1] 28 32 36 40</code></pre>
+<p>Abaixo, usamos o segundo argumento como <code>2</code>, assim, a função retorna um vetor com as somas das colunas da matriz.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="funcoes-apply.html#cb118-1" aria-hidden="true"></a><span class="kw">apply</span>(matriz, <span class="dv">2</span>, sum)</span></code></pre></div>
+<pre><code>## [1] 10 26 42 58</code></pre>
+<p>Também é possível utilizar funções criadas por usuários ou funções de outros pacotes.</p>
+<p>Exemplo:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="funcoes-apply.html#cb120-1" aria-hidden="true"></a><span class="kw">apply</span>(matriz, <span class="dv">1</span>, <span class="cf">function</span>(x){x<span class="op">^</span><span class="dv">2</span><span class="fl">+0.5</span>})</span></code></pre></div>
+<pre><code>##       [,1]  [,2]  [,3]  [,4]
+## [1,]   1.5   4.5   9.5  16.5
+## [2,]  25.5  36.5  49.5  64.5
+## [3,]  81.5 100.5 121.5 144.5
+## [4,] 169.5 196.5 225.5 256.5</code></pre>
+</div>
+<div id="tapply" class="section level3" number="1.6.2">
+<h3><span class="header-section-number">1.6.2</span> Tapply</h3>
+<p>A função <code>tapply</code> funciona da mesma forma que a função <code>apply</code>, mas podendo usar uma variável como indice de marginal.
+A função é utilizada da seguinte forma:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="funcoes-apply.html#cb122-1" aria-hidden="true"></a><span class="kw">tapply</span>(X, Indice, Funcao)</span></code></pre></div>
+<p>Exemplo:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="funcoes-apply.html#cb123-1" aria-hidden="true"></a>dados &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sexo =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>),</span>
+<span id="cb123-2"><a href="funcoes-apply.html#cb123-2" aria-hidden="true"></a>                               <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">11</span>)),</span>
+<span id="cb123-3"><a href="funcoes-apply.html#cb123-3" aria-hidden="true"></a>                    <span class="dt">idade =</span> <span class="kw">c</span>(<span class="dv">79</span>, <span class="dv">2</span>, <span class="dv">95</span>, <span class="dv">22</span>, <span class="dv">25</span>, <span class="dv">73</span>, <span class="dv">82</span>, <span class="dv">23</span>, <span class="dv">6</span>, <span class="dv">19</span>,</span>
+<span id="cb123-4"><a href="funcoes-apply.html#cb123-4" aria-hidden="true"></a>                              <span class="dv">43</span>, <span class="dv">39</span>, <span class="dv">9</span>, <span class="dv">88</span>, <span class="dv">89</span>, <span class="dv">41</span>, <span class="dv">4</span>, <span class="dv">13</span>, <span class="dv">92</span>, <span class="dv">33</span>))</span>
+<span id="cb123-5"><a href="funcoes-apply.html#cb123-5" aria-hidden="true"></a></span>
+<span id="cb123-6"><a href="funcoes-apply.html#cb123-6" aria-hidden="true"></a><span class="co"># Calculando a méria da idade de acordo com sexo</span></span>
+<span id="cb123-7"><a href="funcoes-apply.html#cb123-7" aria-hidden="true"></a><span class="kw">tapply</span>(dados<span class="op">$</span>idade, dados<span class="op">$</span>sexo, mean)</span></code></pre></div>
+<pre><code>##        F        M 
+## 42.72727 45.22222</code></pre>
+</div>
+<div id="sapply" class="section level3" number="1.6.3">
+<h3><span class="header-section-number">1.6.3</span> Sapply</h3>
+<p>A função <code>sapply</code> é utilizada para aplicar funções em cada elemento de um objeto de tipo lista, utilizando a seguinte sintaxe:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="funcoes-apply.html#cb125-1" aria-hidden="true"></a><span class="kw">sapply</span>(X, Funcao)</span></code></pre></div>
+<p>Onde <code>X</code> representa os dados (de tipo lista) e <code>Funcao</code> representa a função a ser aplicada em cada elemento dessa lista.</p>
+<p>Exemplo:</p>
+<p>Abaixo a função sapply retorna um vetor de comprimento <code>3</code>, onde cada elemento representa o resultado da função <code>mean</code> de cada elemento da lista.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="funcoes-apply.html#cb126-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co"># Criado um vetor de sequencia de 1 a 10</span></span>
+<span id="cb126-2"><a href="funcoes-apply.html#cb126-2" aria-hidden="true"></a>y &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">14</span> <span class="co"># Criado um vetor de sequencia de 2 a 14</span></span>
+<span id="cb126-3"><a href="funcoes-apply.html#cb126-3" aria-hidden="true"></a>z &lt;-<span class="st"> </span><span class="dv">60</span><span class="op">:</span><span class="dv">90</span> <span class="co"># Criado um vetor de sequencia de 60 a 90</span></span>
+<span id="cb126-4"><a href="funcoes-apply.html#cb126-4" aria-hidden="true"></a></span>
+<span id="cb126-5"><a href="funcoes-apply.html#cb126-5" aria-hidden="true"></a>lista &lt;-<span class="st"> </span><span class="kw">list</span>(x,y,z) <span class="co"># Criando uma lista com os objetos anteriores</span></span>
+<span id="cb126-6"><a href="funcoes-apply.html#cb126-6" aria-hidden="true"></a></span>
+<span id="cb126-7"><a href="funcoes-apply.html#cb126-7" aria-hidden="true"></a><span class="kw">sapply</span>(lista, mean) </span></code></pre></div>
+<pre><code>## [1]  5.5  8.0 75.0</code></pre>
+</div>
+<div id="lapply" class="section level3" number="1.6.4">
+<h3><span class="header-section-number">1.6.4</span> Lapply</h3>
+<p>A função <code>lapply</code> funciona da mesma forma que <code>sapply</code>, porém, é retornado uma lista ao invés de um vetor dos resultados. A função é utilizada da seguinte forma:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="funcoes-apply.html#cb128-1" aria-hidden="true"></a><span class="kw">lapply</span>(X, Funcao)</span></code></pre></div>
+<p>Onde <code>X</code> representa os dados (de tipo lista) e <code>Funcao</code> representa a função a ser aplicada em cada elemento dessa lista.</p>
+<p>Exemplo:</p>
+<p>Abaixo a função lapply retorna uma lista de comprimento <code>3</code>, onde cada elemento representa o resultado da função <code>mean</code> de cada elemento da lista.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="funcoes-apply.html#cb129-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co"># Criado um vetor de sequencia de 1 a 10</span></span>
+<span id="cb129-2"><a href="funcoes-apply.html#cb129-2" aria-hidden="true"></a>y &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">14</span> <span class="co"># Criado um vetor de sequencia de 2 a 14</span></span>
+<span id="cb129-3"><a href="funcoes-apply.html#cb129-3" aria-hidden="true"></a>z &lt;-<span class="st"> </span><span class="dv">60</span><span class="op">:</span><span class="dv">90</span> <span class="co"># Criado um vetor de sequencia de 60 a 90</span></span>
+<span id="cb129-4"><a href="funcoes-apply.html#cb129-4" aria-hidden="true"></a></span>
+<span id="cb129-5"><a href="funcoes-apply.html#cb129-5" aria-hidden="true"></a>lista &lt;-<span class="st"> </span><span class="kw">list</span>(x,y,z) <span class="co"># Criando uma lista com os objetos anteriores</span></span>
+<span id="cb129-6"><a href="funcoes-apply.html#cb129-6" aria-hidden="true"></a></span>
+<span id="cb129-7"><a href="funcoes-apply.html#cb129-7" aria-hidden="true"></a><span class="kw">lapply</span>(lista, mean) </span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 5.5
+## 
+## [[2]]
+## [1] 8
+## 
+## [[3]]
+## [1] 75</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="funcoes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pacotes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["apostila_r.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
